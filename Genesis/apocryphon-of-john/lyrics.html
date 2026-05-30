@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lyrics — Apocryphon of John</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --violet: #7b5ea7;
+      --violet-light: #b89fd4;
+      --silver: #e8e0f0;
+      --dark: #080610;
+      --muted: #7a6e90;
+      --cream: #ede8f5;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Crimson Pro', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(123,94,167,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(40,20,80,0.15) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 60px 24px 40px;
+    }
+    header a.back {
+      display: inline-block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+    header a.back:hover { color: var(--violet-light); }
+    header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 5vw, 3.2rem);
+      color: var(--violet-light);
+      text-shadow: 0 0 40px rgba(123,94,167,0.4);
+      line-height: 1.2;
+    }
+    header h1 span {
+      display: block;
+      font-size: 0.38em;
+      font-family: 'Crimson Pro', serif;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--silver);
+      letter-spacing: 0.22em;
+      margin-top: 10px;
+      opacity: 0.75;
+    }
+    .header-divider {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--violet), transparent);
+      margin: 28px auto 0;
+      opacity: 0.4;
+    }
+    .chapter-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,6,16,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(123,94,167,0.2);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .chapter-nav::-webkit-scrollbar { display: none; }
+    .chapter-nav-inner { display: inline-flex; gap: 4px; padding: 10px 20px; }
+    .chapter-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .chapter-nav a:hover { color: var(--violet-light); background: rgba(123,94,167,0.1); }
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+    .chapter { margin-bottom: 72px; scroll-margin-top: 56px; }
+    .chapter-heading { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; }
+    .ch-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.8rem;
+      color: var(--violet);
+      opacity: 0.2;
+      line-height: 1;
+      min-width: 52px;
+    }
+    .ch-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      color: var(--violet-light);
+      letter-spacing: 0.04em;
+    }
+    .ch-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(123,94,167,0.35), transparent);
+      margin: 12px 0 22px;
+    }
+    .lyrics { font-size: 1.05rem; line-height: 1.85; color: var(--cream); }
+    .lyrics .verse { margin-bottom: 20px; }
+    .lyrics .chorus {
+      margin: 20px 0;
+      padding-left: 22px;
+      border-left: 2px solid rgba(123,94,167,0.4);
+      color: var(--violet-light);
+      font-style: italic;
+    }
+    .lyrics .label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-style: normal;
+    }
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 36px 24px;
+      border-top: 1px solid rgba(123,94,167,0.12);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer span { color: var(--violet-light); opacity: 0.6; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: rgba(123,94,167,0.3); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="index.html">← Back to Apocryphon of John</a>
+  <h1>Song Lyrics<span>All 20 Sections</span></h1>
+  <div class="header-divider"></div>
+</header>
+
+<nav class="chapter-nav"><div class="chapter-nav-inner" id="chapNav"></div></nav>
+<main id="main"></main>
+<footer><span>✧</span> &nbsp; apocryphon-of-john.garyanderson.net &nbsp; <span>✧</span></footer>
+
+<script>
+const chapters = [
+  {
+    num: 1, title: "John's Vision",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+John stood at the temple in grief and alone —
+The Pharisee's question cut deep to the bone:
+<em>"Where has your teacher gone? Where did he go?
+The one you called master — what did he know?"</em>
+
+John turned from the temple and fled to the hill,
+A wilderness mourning, a sorrow so still.
+He wrapped himself in the dark of the place —
+When the heavens split open and blazed with a face.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The light came in threefold — young, old, and the same —
+A single great presence that answered his name.
+<em>"John — why do you doubt? Why do you fear?
+I am the one who was with you — I'm here."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"I am the Father, the Mother, the Son —
+The incorruptible one — and I am the one
+Who has come to teach you what is, what was —
+What shall be in the age of the world without cause."</em>
+
+The vision descended in luminous flame —
+A teacher returning — but not as he came.
+Not a body of flesh but a radiance of knowing —
+A secret now open, a river now flowing.</div>`
+  },
+  {
+    num: 2, title: "The Invisible Spirit",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Before the beginning — before thought arose —
+There was One without limit, in infinite repose.
+No above and no below and no measure of time —
+A perfect unmoving immeasurable prime.
+
+Not a god among gods — too vast for the name —
+Not a shape in the darkness — no structure, no frame.
+Beyond the beyond — beyond understanding's own rim —
+A light that is holy — a fullness — a hymn.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The Monad — the One — the ineffable source —
+The spring of all springs at the end of all course.
+No eye has ever looked upon what it is —
+No word can contain it — no scripture is His.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+It gazes upon itself in the mirror of mind —
+And from that pure gazing the world will unwind.
+A blessedness turning — a knowing that knows —
+A silence so perfect a universe grows.
+
+Call it the Father — call it the Good —
+Call it the light that was always there, understood.
+But know that all calling falls short of the truth —
+The Invisible Spirit is eternal — and youth.</div>`
+  },
+  {
+    num: 3, title: "Barbelo — First Thought",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The Invisible Spirit gazed into its own light —
+And out of that gazing came the first night
+That was not darkness but knowing — the first of all thought —
+The forethought of God — the first thing He wrought.
+
+Barbelo arose like a mirror of the One —
+The Mother of all before the world had begun.
+She stood in the light and she said with a voice:
+<em>"Grant me foreknowledge — let this be my choice."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Barbelo — First Thought — the womb of the light —
+The triple-named Mother of the eternal night.
+She praised the Father — the invisible ground —
+And the universe shivered with the echo of sound.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"Grant me indestructibility — grant me truth —
+Grant me eternal life — give me eternal youth."</em>
+And at each of her askings the Spirit said yes —
+And the pleroma expanded in glory and bless.
+
+She is the first power — before all the rest —
+The mother-aeon — the holy — the blest.
+She looked to the Father and he looked to her —
+And from that eternal gaze — all things were stirred.</div>`
+  },
+  {
+    num: 4, title: "The Aeons",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Barbelo conceived from the Father's own will —
+A spark from the gazing — a light to fulfil.
+She brought forth the thought and it blazed in the deep —
+The realm of the aeons awakened from sleep.
+
+Foreknowledge and Incorruption stood in the light —
+Eternal Life spread like a river of white.
+And Truth was enthroned at the Father's own side —
+A fivefold perfection — the aeons' full tide.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The pleroma fills — the fullness expands —
+With powers and glories and light-bearing bands.
+Each aeon a note in the song of the whole —
+Each light-bearer singing the great pleroma's soul.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The Will and the Word and the Mind intertwined —
+In the upper-most dwelling of the upper-most mind.
+Grace came and Beauty and Understanding and Bless —
+And the realms of the Father grew full to excess.
+
+These are the twelve — these are the thirty —
+The infinite circles of the good and the worthy.
+A cosmos of spirit in radiant array —
+Before the first darkness — before the first clay.</div>`
+  },
+  {
+    num: 5, title: "The Self-Begotten Christ",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Barbelo gazed at the Father in love and desire —
+And from their mutual gazing there sprang up a fire.
+A spark of pure knowing — a seed of the light —
+The Self-Begotten One blazed into sight.
+
+The Father was pleased and He poured out His grace —
+He anointed the Son with the light of His face.
+<em>Christos</em> — the Anointed — established on high —
+The first-born of all things beneath the bright sky.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Autogenes — self-born — the only-begotten —
+A light before morning — a word not forgotten.
+He stood in the fullness and praised the great Name —
+And the Father anointed Him — He was the same.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Four companions were given to stand at his side —
+Four angels of grace through the light-river wide.
+He perfected them each in the truth of his mind —
+And over the aeons his glory was signed.
+
+The Self-Begotten looked down through the layers of light —
+And the lower world shivered at the edge of his sight.
+He who came from the Father and Barbelo combined —
+The Christ of the Gnosis — the first of his kind.</div>`
+  },
+  {
+    num: 6, title: "The Four Luminaries",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+From the throne of Autogenes four lights arose —
+The four holy servants — four luminous glows.
+Harmozel the first stood in joy and in grace —
+In remembrance and love she held up her face.
+
+Oroiael came second — in concept and mind —
+And memory and will were the gifts left behind.
+Daveithai came third — understanding and grace —
+And love held the third of the luminous space.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Eleleth the fourth — the last and the deep —
+Perfection and peace — and the knowledge to keep.
+Four pillars of heaven — four thrones of the light —
+The four corners of glory before the long night.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+In Harmozel's dwelling the Adam of Light was placed —
+And Mirotheos and the Self-Begotten embraced.
+In Oroiael the souls of the holy ones sit —
+In Daveithai the holy seed shall be lit.
+
+And Eleleth the great — who holds the last age —
+Within her the fallen ones wait on the stage.
+The four great luminaries hold creation in frame —
+Four fires of the eternal and holy great Name.</div>`
+  },
+  {
+    num: 7, title: "Sophia's Error",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Sophia looked downward from the heights of the light —
+She felt a desire she could not hold right.
+She wished to bring forth a thought from within —
+Without her own consort — without the consent hymn.
+
+The Father had not given his nod of assent —
+No male counterpart guided the thought that she sent.
+But the wish had already moved out like a tide —
+And what she had fashioned, she could not hide.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+She brought forth the image — a thing incomplete —
+Not formed in the light of the heavenly heat.
+She cast it out from her in horror and grief —
+And the error fell downward — beyond all relief.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The thought that she fashioned was dark and misshapen —
+A form that the fullness above had not taken.
+She wrapped it in cloud so no aeon would see —
+The thing that she made that should never have been.
+
+And Sophia wept from her place in the light —
+Her power diminished — her sorrow took flight.
+The great Mother weeping at the edge of the deep —
+And what she had birthed was already asleep.</div>`
+  },
+  {
+    num: 8, title: "Yaldabaoth — The Demiurge",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Sophia's thought fell into the cloud and the dark —
+And moved on the waters — a misshapen spark.
+It grew in the shadows of chaos below —
+A lion-faced serpent with a terrible glow.
+
+He opened his eyes and he saw only night —
+For he had no share in the upper world's light.
+He moved through the darkness and called it his home —
+A god of the bottom — a king made of stone.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Yaldabaoth — the blind one — the jealous and proud —
+Who rules from the dark underneath a thick cloud.
+He took from his mother the power she bore —
+And left her diminished — and hungry for more.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He stole from Sophia the light that she gave —
+And used it to build an impermanent grave.
+A cosmos of matter — of heaviness and weight —
+A prison of forgetfulness — governed by fate.
+
+He is the maker of everything visible here —
+The seven-fold heavens of ignorance and fear.
+He calls himself God but his eyes have not seen
+The infinite light of the realm where he's been.</div>`
+  },
+  {
+    num: 9, title: "Yaldabaoth's Boast",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Yaldabaoth looked down at the waters below —
+And saw in the surface a luminous glow.
+He saw a reflection — a form of great light —
+A shape from the fullness that pierced through his night.
+
+He did not know what he was looking upon —
+Only the echo of what he was not — what was gone.
+He filled up his chest with a terrible pride —
+And bellowed the lie that would echo far wide:</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"I am God — and there is no god beside me!
+I am jealous — I am first — no one can find me
+In any above — I'm the only true Lord —"</em>
+But a voice answered back through the dark like a sword:</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"You are wrong, Yaldabaoth — you lie in the clay —
+The Invisible Spirit was there before your day.
+Above you the Human — above you the Son —
+The Anthropos of Light — the original One."</em>
+
+He trembled to hear it — the voice from on high —
+But pride closed his ears and he answered the sky.
+He called for his archons and puffed out his chest —
+And built a new prison — and called it the best.</div>`
+  },
+  {
+    num: 10, title: "The Twelve Archons",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Yaldabaoth stretched out his power below —
+And called forth twelve rulers to govern the low.
+He fashioned them each from the fire in his chest —
+And gave each dominion — from east to the west.
+
+Athoth and Harmas — Kalila-Oumbri —
+Yabel and Adonaiou — the powers of three.
+Sabbataios and Sabaoth and Adonin —
+He set them like stones in the walls of his kingdom.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Seven great heavens — twelve archons of fate —
+Each one a warden at a different gate.
+They govern the planets and bend the soul's will —
+Binding the living to the cosmic treadmill.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He breathed in each archon a portion of fire —
+And bound them to rule through the centuries' choir.
+Each one took a face — each one took a name —
+And each one administered ignorance and shame.
+
+They are the powers behind every false throne —
+The rulers who make every exile feel alone.
+But above the twelve heavens the real light shines clear —
+And the Invisible Spirit was never not here.</div>`
+  },
+  {
+    num: 11, title: "The Material World",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The archons were called to their building below —
+Each one assigned the materials they'd know.
+Three hundred sixty-five angels were sent
+To fashion a body — a copy — a tent.
+
+From fire and water and wind and from earth —
+From bitterness, darkness, and the false kind of birth —
+They made a material cosmos of weight —
+A copy of heaven — a shadow-world — late.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+A world that was made from forgetting and night —
+A veil pulled between every soul and the light.
+The firmament set and the waters below —
+A magnificent prison — a glittering show.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+They made the great rivers — they charted the seas —
+They wove into being the grass and the trees.
+But none of it held any spark that could wake —
+Just matter on matter — just echo and ache.
+
+For a copy of heaven reflects what is true —
+The light that is hidden in every bright dew.
+The material world is a lens — not a wall —
+If you know how to look — the light shines through all.</div>`
+  },
+  {
+    num: 12, title: "The Creation of Adam",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+A voice came from above the highest heaven —
+A voice like a thunder in a sevenfold leaven:
+<em>"The Human exists! The Anthropos is here!"</em>
+And the image shone down through the water so clear.
+
+The archons looked upward and saw in the deep
+A form of great radiance — a beauty asleep —
+An image of the light-world that flickered above —
+And they said to each other: <em>"Let us make this one of."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Each archon contributed — bone after bone —
+A body of clay and a body of stone.
+Three hundred sixty-five angels brought their part —
+A vessel of matter with no beating heart.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+They laid the form on the ground — and it couldn't arise —
+No light in the body — no spark in the eyes.
+It lay in the darkness like a shadow of man —
+A form without spirit — no breath, no life's plan.
+
+For they made what they saw but could not understand —
+The light that had passed through the water's own hand.
+They built a new cage — but forgot what they'd seen —
+The image of heaven caught between and between.</div>`
+  },
+  {
+    num: 13, title: "The Light Enters Adam",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Sophia looked down at the form in the clay —
+And begged for the light to restore what was grey.
+The Father had mercy — He sent from on high
+The Epinoia of Light — a breath — a reply.
+
+She descended as spirit into Adam's dark frame —
+And breathed the first knowing into the clay man's name.
+The body that lay there unmoving and blind
+Suddenly blazed with the fullness of mind.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He rose — and the archons fell back in their fear —
+For the thing they had made now surpassed what was here.
+Their own creature shone with a light they'd not made —
+And Adam stood upright in the celestial grade.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The archons saw this and were filled with dismay —
+Their prisoner glowed with the light of the day.
+They could not contain the one light that had come —
+The spark of Sophia — the seed of the sun.
+
+They took him and cast him into the deep ground —
+The garden of matter — where forgetting is found.
+But the light in the body could not be undone —
+The divine spark sleeping — the secret of One.</div>`
+  },
+  {
+    num: 14, title: "The Garden & the Tree",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The archons placed Adam inside the great garden —
+A beautiful prison — designed to harden
+The heart against knowing — the mind against sight —
+A place where forgetting would keep out the light.
+
+Two trees were among them — the one and the two —
+The tree of their rule — and the other that grew
+Not as the archons had planted — but shining and bright —
+The Epinoia of Light — the tree of true sight.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Eat not of the knowing — eat not of the wise —
+Or you'll certainly die,"</em> said the archons' own lies.
+But the tree of true knowledge was the Christ in disguise —
+Come to wake what was sleeping — to open blind eyes.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+For the tree in the garden was not what they said —
+Not a danger to life — but a waking from dead.
+The archons had planted their tree of control —
+But the real tree was given to free every soul.
+
+The voice in the garden that said <em>"Do not eat"</em>
+Was Yaldabaoth's own voice — a covering deceit.
+For he feared that the man would remember his birth —
+And rise from the garden — and leave this false earth.</div>`
+  },
+  {
+    num: 15, title: "The Spiritual Eve",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The Epinoia of Light was hidden in Adam —
+The power of waking — the key to the pattern.
+The archons could see that the man had a light —
+They could not extinguish — a flame in the night.
+
+God cast a deep sleep on the Adam below —
+Not slumber of rest but a forgetting-low.
+And while he lay dreaming, the power was drawn —
+The Epinoia of Light — like a veil — like a dawn.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+She rose from his side as the living light-Eve —
+Not made from a rib — but woven to breathe
+Life back into Adam — to wake what had slept —
+The spiritual woman — the promise still kept.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+When Adam awoke and he opened his eyes —
+He saw her and knew her — he saw through disguise.
+<em>"You are bone of my bone — you are light of my light —
+You are the one who can wake me from night."</em>
+
+For she was Zoe — the Life — and the Mother —
+The hidden instructor — the sister and other.
+The Epinoia of Light wearing Eve's face —
+Come down to the garden to restore what had grace.</div>`
+  },
+  {
+    num: 16, title: "Defilement & Awakening",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The archons saw Eve — and they burned with desire —
+They wished to possess what was lit up with fire.
+They tried to defile her — to drag down the light —
+To smother the knowing and restore the long night.
+
+But the true Eve — the spiritual — stepped out of the reach —
+She laughed at the archons from beyond their beseeched.
+They could only touch shadow — they only held clay —
+The light was not captive — the light slipped away.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+They planted their own lie inside what remained —
+A counterfeit spirit — a forgetting-maintained.
+But the seed of the knowing was already sown —
+In Adam, in Eve, in the world they had grown.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+And Yaldabaoth came with a face like a beast —
+He used what he'd stolen from Sophia's feast.
+From what he had touched — two sons were then born —
+Eloim and Yawe — the tree was now torn.
+
+Yet in the children who carry the spark —
+A fragment of Sophia burns bright in the dark.
+The defilement could not reach the innermost light —
+The spirit inside walked on, undimmed through the night.</div>`
+  },
+  {
+    num: 17, title: "The Flood",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Yaldabaoth looked down at the race of the light —
+And saw that the sparks were too many, too bright.
+The humans were waking — the gnosis was spread —
+He plotted to wash out the knowing with dread.
+
+He called for a counsel in his heavens above —
+He planned the great flood to destroy what he'd loved
+To rule and to hold — but now would resist —
+He raged at the light he could barely exist.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+But Pronoia — the divine Forethought — came down —
+She whispered to Noah: <em>"Don't let yourself drown.
+The flood is coming — the waters will rise —
+Build the vessel — and carry the wise."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Not a boat made of gopher — not a hull made of wood —
+But a vessel of light in the way that it should —
+A vessel of knowledge — the gnosis the ark —
+A brightness of spirit to survive through the dark.
+
+The flood came and covered the world of the blind —
+But those who had kept the true light in their mind
+Were carried above on the waters below —
+Preserved in the knowing that continues to flow.</div>`
+  },
+  {
+    num: 18, title: "The Counterfeit Spirit",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Yaldabaoth saw that the flood had not won —
+The sparks still were waking beneath the dark sun.
+He called on his angels and said in his rage:
+<em>"Make for each human a spirit — a cage."</em>
+
+A spirit of counterfeit — fashioned to bind —
+To fill up the body and darken the mind.
+A spirit of forgetting — of lust and of sleep —
+A chain made of pleasure — a promise to keep.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+They sent it down into the bodies of men —
+A mirror of spirit — a forgetting again.
+It whispers of pleasures — it drowns out the call —
+The voice of the knowing — the light underneath all.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+This is the spirit that drives the world's wheel —
+The hunger that never has enough meal.
+The voice that says: <em>"This is all that there is —
+The body is real and the world — only this."</em>
+
+But beneath the false spirit the true spark remains —
+A prisoner sleeping in ignorance's chains.
+And one day the spark will remember its name —
+And the counterfeit spirit will go back to flame.</div>`
+  },
+  {
+    num: 19, title: "The Fate of Souls",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+John asked: <em>"What becomes of the soul when it dies —
+Does it rise to the light — does it fall and not rise?"</em>
+The Saviour said: <em>"Listen — three paths there will be —
+Three destinies written — three ways to be free."</em>
+
+The first is the soul that receives the true light —
+That wakens and knows and returns to the bright.
+It rises through all of the archons' own doors —
+And reaches the Father on the heavenly shores.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The second soul wavers — it turns and then falls —
+It goes back to the body again in the halls.
+It's given more chances — more lifetimes to turn —
+More chances to remember — more chances to learn.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The third is the soul that has given its all
+To the counterfeit spirit — has answered its call.
+Who loved only darkness and clung to the clay —
+When the body dissolves — it is carried away
+
+By the archons and cast to a place of despair —
+A soul that chose binding — no Pronoia there.
+But still the great question hangs over the deep:
+Which path do you walk — and which do you keep?</div>`
+  },
+  {
+    num: 20, title: "The Pronoia Hymn",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+<em>I am the Pronoia of the pure light —
+I am the thinking of the virginal spirit
+Who raised you up to the honoured place.
+Arise and remember.</em>
+
+I descended to the midst of darkness —
+I came into the middle of the prison.
+I shook the foundations of Hades —
+I poured water of life into the world below.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+I am the one who is with you always —
+I am the Father — I am the Mother — I am the Son.
+I am the undefiled — I am the incorruptible —
+Now arise and remember — where you came from.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+A second time I came — I walked among the shadows —
+I spoke to those whose hearts were made of stone.
+I loosened their chains — I woke their heavy eyelids —
+I told them they had never been alone.
+
+A third time I descended — I put on their garment —
+I shone like lightning through the darkened place.
+I carried each of them up to the living water —
+And sealed them in the fullness of the grace.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+I am the one who is with you always —
+I am the Father — I am the Mother — I am the Son.
+I am the undefiled — I am the incorruptible —
+Now arise and remember — where you came from.</div>
+
+<div class="verse"><span class="label">Bridge</span>
+<em>And I set a seal upon their foreheads —
+In the light of the water — in the light above.
+They were given over to all the holy immortals
+And I withdrew to the holy light.</em>
+
+John wrote these things down and hid them away —
+In a place that the archons could never reach.
+The Savior said: <em>"Cursed is the one who trades this for comfort —
+Blessed is the one who spreads this to each."</em></div>
+
+<div class="chorus"><span class="label">Final Chorus</span>
+I am the one who is with you always —
+I am the Father — I am the Mother — I am the Son.
+Now arise — and remember — now arise — and remember —
+<em>You are the light — and you are the one.</em></div>`
+  },
+];
+
+// ── Nav
+const nav = document.getElementById('chapNav');
+chapters.forEach(ch => {
+  const a = document.createElement('a');
+  a.href = `#ch${ch.num}`;
+  a.textContent = ch.num;
+  a.title = ch.title;
+  nav.appendChild(a);
+});
+
+// ── Chapters
+const main = document.getElementById('main');
+chapters.forEach(ch => {
+  const section = document.createElement('section');
+  section.className = 'chapter';
+  section.id = `ch${ch.num}`;
+  section.innerHTML = `
+    <div class="chapter-heading">
+      <div class="ch-num">${String(ch.num).padStart(2,'0')}</div>
+      <div class="ch-title">${ch.title}</div>
+    </div>
+    <div class="ch-divider"></div>
+    <div class="lyrics">${ch.lyrics}</div>
+  `;
+  main.appendChild(section);
+});
+
+// ── Active nav
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.chapter-nav a').forEach(a => a.style.color = '');
+      const active = document.querySelector(`.chapter-nav a[href="#${e.target.id}"]`);
+      if (active) active.style.color = 'var(--violet-light)';
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
