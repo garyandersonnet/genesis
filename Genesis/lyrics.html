@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lyrics — Genesis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #f5efe0;
+      --dark: #0d0b08;
+      --muted: #8a7a5a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Crimson Pro', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(201,168,76,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(100,60,20,0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Header ── */
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 60px 24px 40px;
+    }
+    header a.back {
+      display: inline-block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+    header a.back:hover { color: var(--gold); }
+    header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(201,168,76,0.3);
+    }
+    header h1 span {
+      display: block;
+      font-size: 0.38em;
+      font-family: 'Crimson Pro', serif;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-light);
+      letter-spacing: 0.25em;
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+    .header-divider {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 28px auto 0;
+      opacity: 0.4;
+    }
+
+    /* ── Nav ── */
+    .chapter-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,11,8,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .chapter-nav::-webkit-scrollbar { display: none; }
+    .chapter-nav-inner {
+      display: inline-flex;
+      gap: 4px;
+      padding: 10px 20px;
+    }
+    .chapter-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .chapter-nav a:hover { color: var(--gold); background: rgba(201,168,76,0.08); }
+
+    /* ── Main ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* ── Chapter block ── */
+    .chapter {
+      margin-bottom: 72px;
+      scroll-margin-top: 56px;
+    }
+    .chapter-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+    .ch-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.8rem;
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 1;
+      min-width: 52px;
+    }
+    .ch-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.15rem;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+    }
+    .ch-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(201,168,76,0.35), transparent);
+      margin: 12px 0 22px;
+    }
+
+    /* ── Lyrics ── */
+    .lyrics {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--cream);
+    }
+    .lyrics .verse {
+      margin-bottom: 20px;
+    }
+    .lyrics .chorus {
+      margin: 20px 0;
+      padding-left: 22px;
+      border-left: 2px solid rgba(201,168,76,0.35);
+      color: var(--gold-light);
+      font-style: italic;
+    }
+    .lyrics .label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-style: normal;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 36px 24px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer span { color: var(--gold); opacity: 0.6; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="index.html">← Back to Genesis</a>
+  <h1>Song Lyrics<span>All 50 Chapters</span></h1>
+  <div class="header-divider"></div>
+</header>
+
+<nav class="chapter-nav"><div class="chapter-nav-inner" id="chapNav"></div></nav>
+
+<main id="main"></main>
+
+<footer><span>✦</span> &nbsp; genesis.garyanderson.net &nbsp; <span>✦</span></footer>
+
+<script>
+const chapters = [
+  {
+    num: 1, title: "The Creation",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Before the first morning, before any sound,
+No sky, no horizon, no sea and no ground—
+Then God spoke the darkness, His voice like a flame,
+And out of the nothing, creation became.
+
+<em>Let there be light</em> — and the light burst to life,
+He split it from shadow, from sorrow, from night.
+The waters divided, the dry land appeared,
+The stars took their places, the cosmos was cleared.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+On the first day, on the second day,
+On the third and the fourth He fashioned the way.
+On the fifth and the sixth He breathed and He made—
+On the seventh He rested; the debt had been paid.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He scattered the seeds on the face of the earth,
+He lit up the sun, gave the moon and stars birth.
+He filled the deep oceans with creatures that swim,
+And birds crossed the heavens — all singing to Him.
+
+He formed man from dust with the breath of the divine,
+And over creation He said, <em>"It is mine —
+And it is good."</em> Every colour, every call,
+The God who made everything — maker of all.</div>`
+  },
+  {
+    num: 2, title: "The Garden of Eden",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The rivers ran silver through Eden's green land,
+And God planted a garden with His own hand.
+He formed a man from the red clay and said,
+<em>"Tend this, and keep it, and be not afraid."</em>
+
+He breathed into nostrils the wind of his soul,
+And the man rose up walking — finally whole.
+From every tree he was free to eat and to know,
+But one tree was forbidden — one fruit must not go.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+In the garden where morning was never yet old,
+Where rivers ran eastward through emerald and gold,
+He took from the man's side a rib and a name —
+And she was <em>bone of his bone</em>, and they were the same.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The animals gathered and bowed at his feet,
+And Adam named every creature he'd meet.
+But none could be found who was meet for his soul,
+So God fashioned woman to make the man whole.
+
+Two people, one garden, one God in the sky —
+No shame in their nakedness under His eye.
+A perfect beginning before the first fall,
+The garden of Eden — the birthplace of all.</div>`
+  },
+  {
+    num: 3, title: "The Fall",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The serpent was subtle, the cleverest beast,
+He crept to the woman and whispered his feast:
+<em>"Did God really say you can't eat of this tree?
+You won't surely die — you'll be wise, you'll be free."</em>
+
+She looked at the fruit and she saw it was bright,
+She reached for the knowing and bit into night.
+She gave to the man and he tasted it too,
+And the garden grew darker — they suddenly knew.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+They hid in the garden from the voice of the Lord,
+The silence was heavy, the shame they ignored.
+<em>"Where are you?"</em> He called through the cool of the day —
+And nothing was ever the same from that day.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He cursed the old serpent to crawl on the ground,
+He told the woman that pain would be found.
+He turned to the man: <em>"By the sweat of your face,
+You'll work till you're dust, you'll return to your place."</em>
+
+He made them a covering of skin and of hide,
+And banished them both from the garden inside.
+A flaming sword turned — now the way was barred fast —
+The age of the garden was sealed in the past.</div>`
+  },
+  {
+    num: 4, title: "Cain & Abel",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Cain was a farmer who worked the hard ground,
+And Abel the shepherd who wandered around.
+They brought their best offerings up to the Lord —
+But Cain's was rejected, and Abel's adored.
+
+The anger rose up in the eldest son's chest,
+His face was cast downward, he burned with unrest.
+God said, <em>"Why this fury? Why this fallen face?
+Sin crouches to take you — you must win the race."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He led his brother to the field alone,
+And struck him down dead on the blood-darkened stone.
+<em>"Where is your brother?"</em> God's voice filled the air —
+<em>"Am I my brother's keeper?"</em> — the first murderer's prayer.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The blood of the innocent cried from the ground,
+And God placed a mark so that Cain would be found.
+He wandered to Nod as a fugitive man,
+But the line of the children would still carry on.
+
+From Cain came the city, the hammer, the song,
+And Abel's death echoes the ages along.
+The first taste of murder, the first funeral cry —
+A brother's blood soaking the earth to the sky.</div>`
+  },
+  {
+    num: 5, title: "Generations of Adam",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Adam begat Seth at a hundred and thirty,
+And Seth lived and walked through the ages of early.
+Enosh and Kenan and Mahalalel's name,
+And Jared and Enoch — the long line of fame.
+
+They lived and they fathered and breathed and they died,
+Eight hundred, nine hundred — the years stretched so wide.
+But one walked with God and was taken away —
+Enoch, who vanished — God took him one day.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+And so the years piled like the leaves of the trees,
+And every man's name echoed under the breeze.
+From Adam to Noah — a river of days —
+The thread of the bloodline through the ancient haze.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Methuselah lived for nine sixty-nine years,
+The oldest of all through the laughter and tears.
+His grandson was Lamech who fathered the one
+Who'd carry the world's hope — his name was Noah the son.
+
+<em>"This one will comfort us"</em> — Lamech declared —
+A word like a flame for the darkness prepared.
+The slow generations move slow as the tide,
+But each is a stepping stone, wide after wide.</div>`
+  },
+  {
+    num: 6, title: "Noah — The Ark",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The earth was corrupt and the violence was vast,
+The wickedness covered from first until last.
+God looked on His world and His heart filled with grief —
+The breath of creation brought only deceit.
+
+But one man stood righteous in all of that age,
+One blameless and faithful against all the rage.
+God came down to Noah and told him the plan:
+<em>"I'm bringing a flood to erase what began."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Build it of gopher wood — three hundred cubits long,
+Fill it with every creature, the weak and the strong.
+Two by two and seven by seven they'll come —
+The whole world is ending but you will be one.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He built it by faith with his sons at his side,
+While the world laughed and scoffed at the growing ark's pride.
+Three stories of chambers and windows and doors —
+A vessel of mercy above the dark floors.
+
+God sealed up the promise with covenant's thread:
+<em>"Come in, you and yours — my own people, not dead."</em>
+The thunder was gathering over the plain —
+And Noah kept building through sun and through rain.</div>`
+  },
+  {
+    num: 7, title: "The Great Flood",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+On the seventeenth day of the second month's time,
+The fountains of deep broke the ancient design.
+The windows of heaven burst open and poured,
+And forty days fell like the wrath of the Lord.
+
+The animals entered, the family too,
+And God shut the door — only He held the view.
+The rain hammered downward, the rivers ran wild,
+And the earth that had hardened now broke like a child.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The waters arose and they covered the hills,
+They drowned the high mountains and silenced the fields.
+All flesh that had moved on the face of the ground
+Was swept from the earth — only eight souls were found.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+A hundred and fifty days under the sky,
+The ark on the surface of darkness drifting by.
+No land, no horizon, no bird, no shore —
+Just eight souls and creatures and the sound of the oar.
+
+But God remembered Noah inside the deep,
+He sent back a wind and He woke him from sleep.
+The waters began to recede and go down —
+And hope was still floating above the drowned town.</div>`
+  },
+  {
+    num: 8, title: "Waters Recede",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The ark settled down on the mountains of old,
+On Ararat's peak in the silence and cold.
+The tops of the mountains appeared by degrees,
+And Noah looked outward — no land and no trees.
+
+He sent out a raven that flew to and fro,
+Then loosed a white dove to see how far she'd go.
+She came back with nothing — the water too wide —
+He held her a week and sent her back outside.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The dove returned at dusk with an olive branch green —
+The first sign of life that the world had yet seen.
+He sent her again and she came back no more —
+And Noah pulled back the great plank from the door.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The earth had gone dry on the twenty-seventh day,
+And God said to Noah, <em>"Come out — you may."</em>
+He stepped from the ark with his family and kin,
+And the creatures spilled outward to start it again.
+
+He built an altar and offered up praise,
+The smell of the offering rose through the haze.
+And God smelled the sweetness and promised in his heart:
+<em>"I will never again curse the ground — a new start."</em></div>`
+  },
+  {
+    num: 9, title: "God's Covenant",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+God blessed Noah's family standing on shore,
+And said, <em>"Be fruitful and fill the earth once more."</em>
+The fear of you now on every creature shall fall —
+The fish and the bird and the beast — over all.
+
+<em>"I give you the green plants, I give you the meat,
+But blood of the living you shall not eat."</em>
+For life is the blood and the blood is divine —
+The maker of life drew the covenant line.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+I set my bow in the clouds of the sky —
+A sign of my promise to you till I die.
+The waters will never again flood the earth —
+This rainbow's my covenant — promise of worth.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+But Noah grew old and he planted a vine,
+He drank of the wine till he crossed over the line.
+His son Ham came in and saw what he saw —
+And told his two brothers against the old law.
+
+Shem and Japheth walked backward, their faces turned down,
+They covered their father without making a sound.
+The blessing and curse of the sons was then sealed —
+And the nations of earth in their names were revealed.</div>`
+  },
+  {
+    num: 10, title: "Table of Nations",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+From Japheth the coastlands and islands were born,
+From Ham the great cities of Africa's horn.
+From Shem came the Semites, the eastward-turned face,
+And all of the nations spread out to their place.
+
+The sons of the sons in their tongues and their clans,
+Dispersed to the corners as only God plans.
+Each family a river, each name its own land —
+The whole world assembled from one man's hand.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+From Noah's three sons the whole world was made wide —
+In their generations the nations divide.
+From Africa's valleys to the islands of sea,
+Every tribe and every tongue — the great family tree.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+And Nimrod was mighty, a hunter of fame,
+He built the great cities and glorified his name.
+Nineveh, Babel, and Calah were his —
+The beginning of kingdoms and all that is.
+
+From Canaan the peoples who walked the hill land,
+From Cush and from Mizraim the warm desert sand.
+The seventy nations, their borders were set —
+And the world was still learning the God it had met.</div>`
+  },
+  {
+    num: 11, title: "Tower of Babel",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The whole world was speaking in one tongue those days,
+And the people moved eastward through the ancient haze.
+They settled in Shinar and said among all,
+<em>"Come, let us build a city — let us build a wall."</em>
+
+<em>"A tower that reaches the heights of the sky —
+Let us make us a name so we never shall die."</em>
+They baked the red bricks and they set up the stone,
+And God looked and said, <em>"They will not leave it alone."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Come down, let us scatter, let us mix up their words —
+Their one tongue of pride is a sound He defers.
+So the city was called by the name Babel then —
+Confusion of tongues at the pride of proud men.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The builders fell silent — they couldn't connect,
+One man spoke of mortar, another said <em>"Wreck."</em>
+The laughter and anger, the pointing of hands —
+And slowly they scattered to faraway lands.
+
+From Babel the languages bloomed on the earth,
+From Babylon's towers came strange second birth.
+The pride of the many reduced to the none —
+And out of the silence came Abraham's son.</div>`
+  },
+  {
+    num: 12, title: "The Call of Abram",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+God spoke to Abram in Ur of the night:
+<em>"Leave your land, leave your family — follow the light.
+Go to a country that I'll show to you there —
+I'll make your name great, I will answer your prayer."</em>
+
+<em>"I'll bless those who bless you and curse those who curse,
+Through you every family of earth shall be nursed."</em>
+So Abram arose and he packed up his kin,
+And stepped into the unknown to let faith begin.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He left without knowing the place he would go,
+He trusted the promise over what he could know.
+From Haran to Canaan, the journey was long —
+And faith in the Lord was his compass and song.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+At Shechem he stopped and God showed him the land:
+<em>"To your offspring I'll give it — this ground where you stand."</em>
+He built there an altar and moved to the plain,
+And built another and called on His name.
+
+A famine then struck and he journeyed to Egypt,
+He feared for his life — to deception he slipped it.
+<em>"Tell them you're my sister"</em> — a lie for his life —
+And Pharaoh took Sarai to be his own wife.</div>`
+  },
+  {
+    num: 13, title: "Abram & Lot",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+They came out of Egypt with silver and gold,
+With flocks and with herds and with stories untold.
+But the land could not carry both Abram and Lot —
+Their herdsmen fell fighting for water and plot.
+
+Abram said gently, <em>"Let there be no strife,
+We're family — the whole land is here for our life.
+You choose your direction — go left or go right —
+I'll take what you leave me, let's end this tonight."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Lot lifted his eyes to the Jordan below,
+The plain like a garden wherever he'd go.
+He chose for himself all the well-watered way —
+And Abram walked westward to Canaan to stay.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+God said to Abram, <em>"Lift up now your eyes,
+Look north and look south, look east at the skies.
+All the land that you see I will give to your seed —
+Your descendants like dust are the children you'll breed."</em>
+
+He walked through the land and he built up his name,
+By Hebron's great oaks, where the promises came.
+A man who gave freely the best of the plain —
+And God gave him all — what you give, you regain.</div>`
+  },
+  {
+    num: 14, title: "War of Kings",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Nine kings went to war in the valley of salt,
+And Sodom and Gomorrah were brought to a halt.
+They carried off Lot with his goods and his tent —
+And a servant escaped and to Abram he went.
+
+Abram armed his three hundred and eighteen men,
+Pursued the great armies by night to their den.
+He struck and he drove them to Damascus far wide —
+And brought back his nephew with all that they'd tried.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Then Melchizedek, king of Salem, appeared —
+Priest of the Most High, who all the kings feared.
+He brought out the bread and he brought out the wine —
+And he blessed Abram's name with a blessing divine.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"Blessed be Abram by the God Most High —
+Maker of heaven and earth and of sky.
+And blessed be the God who has given today
+Your enemies into your hand,"</em> he would say.
+
+Abram gave tithes from the best of the spoil —
+A tenth to the priest of Jerusalem's soil.
+The king of Sodom offered riches and more —
+But Abram refused — he'd not profit from war.</div>`
+  },
+  {
+    num: 15, title: "God's Covenant with Abram",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+After the battle, in vision God said,
+<em>"Fear not, Abram — I'm your shield and your bread."</em>
+But Abram cried out, <em>"Lord, what will you give?
+I have no son — a servant's heir will live."</em>
+
+God brought him outside to the dark canopy night:
+<em>"Count the stars if you can — that's your seed's delight."</em>
+And Abram believed and it counted as right —
+As righteousness given to the man in the night.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He cut the animals — laid them apart —
+And a burning torch passed through the dark.
+God sealed the covenant in smoke and in flame —
+<em>"To your offspring I've given this land in my name."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"Your children will suffer in a land not their own —
+Four hundred long years they'll be harassed and honed.
+But I'll judge that nation that holds them as slaves,
+And bring your own people out loaded with waves."</em>
+
+<em>"In the fourth generation they'll come back to stay —
+When the Amorite's wickedness won't hold at bay."</em>
+From Egypt to the river — the land to be had —
+The promise was sealed and the night was not sad.</div>`
+  },
+  {
+    num: 16, title: "Hagar & Ishmael",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Sarai had waited ten years in the land,
+No child of her own from the promise at hand.
+She gave Hagar, her servant, to Abram to take,
+To build a son's family for legacy's sake.
+
+But Hagar conceived and despised her own mistress,
+And Sarai grew bitter and brought Abram distress.
+He gave Sarai full authority's right —
+And Hagar was driven into the harsh night.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+But the angel of God found her there by the spring —
+<em>"Where have you come from, and where are you fleeing?"</em>
+<em>"Return to your mistress and endure her hand —
+For I'll give you a son and a people and land."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"You shall call his name Ishmael — God hears your pain —
+For God heard your crying like water-filled rain.
+He'll be wild as the donkey, against every man —
+Against him all brothers since the world began."</em>
+
+She called the Lord's name: <em>El-Roi — the One who sees —</em>
+<em>"Have I seen the back of the one who sees me?"</em>
+And Hagar went back and gave birth to the son —
+And Ishmael grew — the firstborn — the wild one.</div>`
+  },
+  {
+    num: 17, title: "Abraham's New Name",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+When Abram was ninety and nine years of age,
+God appeared to him once more to write a new page.
+<em>"Walk before me and be blameless and whole —
+I'll multiply nations right down from your soul."</em>
+
+<em>Abram</em> — exalted — was now put aside,
+<em>Abraham</em> — the father of many nations beside.
+And Sarai became Sarah — a princess of worth —
+And God promised a son of miraculous birth.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Every man-child among you must bear the sign —
+Circumcised in the flesh of the covenant line.
+From now and forever, the mark in the skin —
+The seal of the promise that God holds within.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Abraham fell on his face and laughed out in the dust —
+<em>"A hundred years old — shall a dead body trust?
+Shall Sarah bear children at ninety this year?"</em>
+He asked God for Ishmael — God said, <em>"I hear."</em>
+
+<em>"But Sarah your wife shall bear Isaac his name —
+My covenant stands through his line all the same.
+As for Ishmael — twelve princes shall fall
+From his seed — but through Isaac I'll answer the call."</em></div>`
+  },
+  {
+    num: 18, title: "Three Visitors",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Three strangers appeared in the heat of the day,
+By Mamre's great oak trees where Abraham lay.
+He ran and bowed low and prepared them a feast —
+Curds, milk, and a calf — for the greatest and least.
+
+While they ate and he stood there beneath the tree's shade,
+<em>"Where is Sarah your wife?"</em> one of the three said.
+<em>"This time next year, she'll hold a son in her arms—"</em>
+And Sarah laughed softly behind the tent's charms.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Is anything too hard for the Lord Most High?
+At the time I return, she'll hold her son's cry."</em>
+Sarah said, <em>"I didn't laugh"</em> — frightened and bare —
+But God said, <em>"Oh yes you did — I was there."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The men rose and turned toward Sodom below,
+And Abraham walked with them — not letting them go.
+God said, <em>"Shall I hide from my friend what I'll do?
+The cry of that city has come into view."</em>
+
+Abraham pleaded — <em>"Will you sweep the just down?
+What if fifty righteous ones lived in that town?"</em>
+He bargained from fifty all the way down to ten —
+<em>"For ten I'll spare it"</em> — God said it again.</div>`
+  },
+  {
+    num: 19, title: "Sodom & Gomorrah",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Two angels came down to the gates of the city,
+And Lot saw them sitting and begged them for pity.
+He brought them inside and prepared them a meal —
+But the men of the city came loud at his heel.
+
+They pounded the door with a violent cry —
+<em>"Send out those two strangers so we can know why."</em>
+The angels struck blind every man at the gate —
+And said to Lot, <em>"Run — it's already too late."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Run — don't look backward — the fire is near,
+Fire and brimstone from heaven is here.
+Flee to the mountain, don't look at the ground —
+Or be like the pillar of salt that was found.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The sun rose on Sodom and God rained down fire,
+On Sodom and Gomorrah — the sin-drowned empire.
+He overturned all of the cities around —
+And the smoke went up like a furnace from the ground.
+
+Lot's wife looked back at the land they had fled,
+And she became a pillar of salt — cold and dead.
+Abraham rose in the morning and looked toward the plain —
+And the smoke from the cities rose up through the rain.</div>`
+  },
+  {
+    num: 20, title: "Abraham & Abimelech",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Abraham journeyed to Gerar's far land,
+And called Sarah his sister — the same old sleight hand.
+King Abimelech sent and he took her away —
+But God came to him in the night dream to say:
+
+<em>"You are dead — for the woman you've taken is wed,
+She belongs to her husband — return her instead."</em>
+The king woke in fear — <em>"Lord, in innocence I —"</em>
+And God said, <em>"I know it — that's why you're alive."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Return now the man's wife, for he is a prophet —
+He'll pray for your life or the grave will not stop it.
+But if you won't give her — know that you'll die —
+You and all yours — under the heavenly eye."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Abimelech rose in the morning with dread,
+He summoned his servants and all that he said.
+He brought back fair Sarah with silver and land,
+And stood before Abraham, head bowed in hand.
+
+<em>"What have you done to us?"</em> the king demanded right —
+And Abraham told him the cause of his fright.
+Then Abraham prayed and the wombs opened wide —
+For God had shut them on Abimelech's side.</div>`
+  },
+  {
+    num: 21, title: "Birth of Isaac",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The Lord visited Sarah as He said He would —
+And she conceived and bore Isaac — the long-promised good.
+At a hundred years old, Abraham held his first son —
+And he laughed with a laughter like rivers that run.
+
+They circumcised Isaac on the eighth day of birth —
+And Sarah cried out with a joy from the earth:
+<em>"Who'd have said unto Abraham — Sarah's nursed sons?
+Yet I've borne him a child in the laughter of ones."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Laughter — the meaning of Isaac's great name,
+For God did the thing that He promised to claim.
+In the bodies long-dead came the seed and the sign —
+That nothing is too hard for the God of the vine.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+But Ishmael mocked at the feast of the child,
+And Sarah saw this and her anger ran wild.
+<em>"Cast out that slave woman and her son from our tent —
+He'll not share the inheritance — that's what I meant."</em>
+
+God told Abraham, <em>"Listen to Sarah's request —
+For through Isaac your name shall be given the best.
+But Ishmael too I will make into a nation —
+He's yours — I will carry his generation."</em></div>`
+  },
+  {
+    num: 22, title: "The Binding of Isaac",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+God called in the night — <em>"Abraham"</em> — and he said, <em>"Here."</em>
+<em>"Take your son, your only son, the son that you love dear.
+Go up to Moriah and offer him there —
+As a burnt offering on the mountain of prayer."</em>
+
+He rose early morning, he saddled his beast,
+He split the firewood and departed the east.
+On the third day he saw the far mountain and said
+To the servants, <em>"Stay here — we will worship instead."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Father, the fire and the wood I can see —
+But where is the lamb for the offering to be?"</em>
+<em>"God will provide for Himself the lamb, son —"</em>
+And together they walked to the place to be done.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He bound up his son on the altar of wood —
+He raised up the knife and he would if he could —
+But the angel cried out from the sky: <em>"Stop your hand!
+Now I know that you fear God — I understand."</em>
+
+In the thicket a ram with his horns caught fast —
+And Abraham offered the ram at the last.
+<em>"Because you did not withhold your only son —
+I'll bless you with blessing that cannot be undone."</em></div>`
+  },
+  {
+    num: 23, title: "Sarah's Death",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Sarah lived a hundred and twenty-seven years —
+A woman of laughter and sorrow and tears.
+She died in Kirjath-arba, Hebron by name —
+And Abraham mourned her and wept through his pain.
+
+He rose from his mourning and stood to speak clear
+To the sons of the Hittites who gathered him near:
+<em>"I am a foreigner — give me a place
+To bury my dead from your land full of grace."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Choose the best of our burial places, our friend —
+None among us would deny what you'd send."</em>
+But Abraham bowed and insisted to pay
+For Machpelah's cave as a permanent stay.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Ephron the Hittite said, <em>"Four hundred shekels? —
+What is that between me and you, settled in equals?"</em>
+But Abraham weighed out the silver that day —
+The full asking price in the hearing of all they.
+
+So the cave and the field became Abraham's own —
+The first piece of land that the patriarch called home.
+He buried sweet Sarah and sealed up the stone —
+The first of the promised land — purchased and owned.</div>`
+  },
+  {
+    num: 24, title: "Isaac & Rebekah",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Abraham summoned his servant and said,
+<em>"Swear that you'll find Isaac a wife — not be misled
+To the daughters of Canaan — go back to my kin,
+To my homeland and family and bring her from them."</em>
+
+The servant took ten of his master's best camels,
+With all kinds of treasure in bundles and panels.
+He came to the city of Nahor one night
+And prayed by the well in the late fading light.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Let the girl who gives water to me and my camels
+Be the one you have chosen through all of these channels."</em>
+Before he had finished, Rebekah came near —
+And gave water to all — the sign was made clear.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He gave her gold jewelry and told her the tale —
+Her family agreed that the story's not stale.
+<em>"Will you go with this man?"</em> they asked her at last —
+<em>"I will go,"</em> said Rebekah — the die had been cast.
+
+She rode out on camels into the far land,
+And Isaac looked up as she came over sand.
+He brought her to Sarah's old tent and she became
+His wife and his comfort — and she knew his name.</div>`
+  },
+  {
+    num: 25, title: "Jacob & Esau",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Abraham died at a hundred and seventy-five,
+And was gathered to his people — the end of his drive.
+He left all he had to his Isaac-born son —
+And the sons of Keturah received lesser ones.
+
+Rebekah was barren — but Isaac would pray —
+And God heard the prayer and she bore twins that day.
+The children were struggling within her so hard
+She cried, <em>"Why is this?"</em> and went out to the yard.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Two nations within you, two peoples apart —
+The elder shall serve the younger at start.
+First Esau came red and as hairy as hide —
+Then Jacob came holding his brother's ankle beside.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Esau grew into a man of the wild,
+And Jacob stayed home — his mother's own child.
+One day Esau came in from the hunt, starving low —
+And Jacob had lentils and red stew to show.
+
+<em>"I'm famished,"</em> said Esau, <em>"give me some of that red —"</em>
+<em>"Sell me your birthright,"</em> said Jacob instead.
+<em>"What good is a birthright if I'm about to die?"</em>
+He swore and he ate — and the birthright went by.</div>`
+  },
+  {
+    num: 26, title: "Isaac in Gerar",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+A famine spread over the land of the day —
+And Isaac prepared himself going away.
+God said, <em>"Do not go down to Egypt this time —
+Stay in the land that I'll show you — it's mine."</em>
+
+<em>"I'll confirm every blessing your father was given —
+I'll multiply offspring like stars heaven-driven.
+Because Abraham obeyed my voice and my law —
+My statutes and charges and all that he saw."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Like father, like son — he called Rebekah his sister,
+But Abimelech saw them and knew he had missed her.
+The old deceit echoed through father and son —
+But God's blessing remained when the danger was done.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Isaac planted and reaped a hundred-fold gain —
+The Lord blessed his hand through the scorching and rain.
+He dug the old wells that his father had bored —
+The Philistines stopped them — but Isaac restored.
+
+At Beersheba one night the Lord spoke again:
+<em>"I am God of your father — don't be afraid then.
+I'll bless you and multiply children like sand —"</em>
+And Isaac built there an altar and thanked for the land.</div>`
+  },
+  {
+    num: 27, title: "Jacob's Deception",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Old Isaac was blind and he called Esau near:
+<em>"Go hunt me some meat and prepare it, my dear.
+That I may bless you before that I die—"</em>
+But Rebekah listened behind the tent's eye.
+
+She called Jacob close and she whispered the plan:
+<em>"Go get me two goats — I'll make stew for the man.
+Put on Esau's clothes and the skin of the beast —
+And bring the food in and receive his last feast."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"The voice is the voice of my Jacob I hear —
+But the hands are the hands of my Esau, my dear."</em>
+He ate of the food and he blessed Jacob's name —
+And sent him away before Esau could claim.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Then Esau came in from the hunt with his game —
+And brought in the stew and called father by name.
+Old Isaac trembled — <em>"Who was here before?
+He took your blessing — I can give no more."</em>
+
+Esau wept bitterly, cried, <em>"Bless me too! —"</em>
+But the blessing was given — there was nothing to do.
+He hated his brother, he swore in his head —
+And Rebekah sent Jacob away in his dread.</div>`
+  },
+  {
+    num: 28, title: "Jacob's Ladder",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Jacob fled from his brother through the wilderness wide,
+With nothing but a stone for a pillow beside.
+As the sun went down in the gathering night,
+He laid down his head in the failing of light.
+
+He dreamed of a stairway that rose to the sky —
+With angels ascending and coming by.
+And above it the Lord stood and said to him clear:
+<em>"I am the God of your fathers — I'm here."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"The land where you're lying I'll give to your seed —
+Your offspring like dust — east and west, every creed.
+I am with you wherever your footsteps shall tread —
+I'll bring you back safely — I'll never have fled."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Jacob awoke in the trembling of dawn —
+<em>"Surely God's in this place and I did not know on."</em>
+<em>"How dreadful this place — this is God's very gate —
+This is the house of the Lord — it is great."</em>
+
+He set up his pillow as a stone-marker there —
+Poured oil on the top as a stone-altar prayer.
+He called it Beth-El — the house of the Lord —
+And vowed to return every blessing restored.</div>`
+  },
+  {
+    num: 29, title: "Jacob & Rachel",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Jacob came to the land of the east and he found
+A well in a field with three flocks gathered round.
+He asked of the shepherds, <em>"Do you know Laban's kin?"</em>
+And Rachel came carrying her flock from the inn.
+
+Jacob rolled back the stone from the well's heavy mouth,
+He watered her flock in the east where the south
+Winds blew — and he wept and he kissed her and said,
+<em>"I'm your father's own kinsman"</em> — and she blushed red.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He worked seven years and they seemed but a day —
+So great was his love in the long-waiting way.
+But the morning revealed Laban's trick in the veil —
+And Leah lay there and Jacob turned pale.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"What have you done?"</em> Jacob cried out in grief —
+But Laban said calmly with no sign of relief:
+<em>"The elder must marry before the young one —
+Work seven more years and then Rachel is won."</em>
+
+So Jacob served Laban another long span —
+Seven more years for the love of this man.
+The God who sees all kept the ledger of days —
+And shaped all the crooked through Laban's dark maze.</div>`
+  },
+  {
+    num: 30, title: "Jacob's Children",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Leah bore children while Rachel stayed dry —
+Reuben and Simeon and Levi passed by.
+Then Judah — <em>"I'll praise the Lord"</em> — was his cry —
+And Rachel grew envious under the sky.
+
+She gave Jacob Bilhah to bear sons for her —
+Dan and Naphtali — the sons of the stir.
+Then Zilpah gave Leah two more by the rod —
+Gad and Asher — the eight sons of God.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Issachar and Zebulun — Leah's sixth and more —
+And Dinah the daughter walked out the same door.
+Then God remembered Rachel's long-barren cry —
+And Joseph was born — her first under the sky.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Jacob asked Laban to let him go free —
+Back to his homeland across the long sea.
+Laban said, <em>"Name your wage — I've been blessed by your hand —"</em>
+And Jacob devised a shrewd stake in the land.
+
+He made the flocks multiply streaked, spotted, black —
+And God gave him wealth and he built his way back.
+Twelve children, great flocks, and a promise ahead —
+The house of the patriarch grew as God said.</div>`
+  },
+  {
+    num: 31, title: "Jacob Leaves Laban",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+God told Jacob, <em>"Return to your forefathers' land —
+I'll be with you as I promised — the promise still stands."</em>
+He called to his wives in the field by the flock —
+And told them of Laban's deceit and the clock.
+
+Rachel and Leah said, <em>"We have no more part
+In our father's house — he's sold off our heart.
+Whatever God says to you — do as He said —"</em>
+And they loaded the camels and broke bread ahead.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Rachel stole the idols her father had kept,
+And Jacob fled quietly while Laban slept.
+Three days before Laban heard where they had gone —
+He chased after Jacob for seven days on.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+God warned Laban in dreams — <em>"Don't say good or ill —"</em>
+He caught up to Jacob on Gilead's hill.
+<em>"Why'd you flee secretly? Why steal away?
+I'd have kissed my own daughters and grandchildren day."</em>
+
+They argued and settled — they piled up a heap —
+A witness of stones between them to keep.
+They called it the watchtower — Mizpah they said:
+<em>"The Lord watch between us when we're each ahead."</em></div>`
+  },
+  {
+    num: 32, title: "Wrestling with God",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Jacob sent messengers on ahead to Esau's land —
+They returned with a message: four hundred men planned.
+Jacob's fear filled the night — he divided his camp:
+<em>"If Esau strikes one, the other can stamp."</em>
+
+He prayed through the darkness — <em>"O God of my kin —
+I'm not worthy the least of your love or your win.
+You said you'd be with me — now Esau is near —
+Deliver me, Lord — I am shaking with fear."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He sent his wives over the ford in the black —
+And alone in the darkness a man came and attacked.
+They wrestled till daybreak — the long grinding fight —
+And Jacob held on through the whole of the night.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The man touched his hip and it went out of place —
+But Jacob said, <em>"I will not let go of your face
+Until you have blessed me."</em> The man said, <em>"Your name?"</em>
+<em>"Jacob."</em> — <em>"No longer — for Israel you came."</em>
+
+<em>"You've wrestled with God and with men and prevailed —"</em>
+And Jacob asked, <em>"Tell me your name"</em> — but it failed.
+He blessed him and left in the breaking of day —
+And Jacob limped onward and called it Peniel.</div>`
+  },
+  {
+    num: 33, title: "Jacob & Esau Reunite",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Jacob looked up and saw Esau approaching with four —
+Four hundred strong men — and his heart hit the floor.
+He put the maidservants in front with their sons,
+Then Leah and children, then Rachel — the ones
+
+He loved at the last. Then he stepped out ahead,
+And bowed seven times till his forehead touched red.
+But Esau ran toward him and fell on his neck —
+And they wept in each other — a beautiful wreck.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Who are all these with you?"</em> asked Esau with grace —
+<em>"The children God gave to your servant's own face."</em>
+<em>"I have plenty, my brother — keep what is yours—"</em>
+But Jacob said, <em>"No — for your face is like God's."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Esau offered to ride beside Jacob along —
+But Jacob said, <em>"The children and flocks aren't that strong.
+Drive them too hard and they'll die on the way —
+Lead on ahead and I'll follow each day."</em>
+
+He came safely to Shechem and bought him a field,
+And set up an altar and there would not yield.
+He called it <em>El-Elohe-Israel</em> — the God
+Of Israel — his God — on this ground where he trod.</div>`
+  },
+  {
+    num: 34, title: "Dinah",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Dinah went out to see the daughters of the land —
+And Shechem the prince saw her and took her by hand.
+He violated her, dishonoured her name —
+But then his heart loved her and from his lips came.
+
+He asked for her hand to his father Hamor —
+<em>"Get me this girl — I must have her and more."</em>
+Jacob heard it and waited till his sons came in —
+And the sons of the field came with rage deep within.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Simeon and Levi with swords on the third day,
+When all the men weak from the cutting's sharp way,
+They came to the city and killed every man —
+And took back their sister — blood on their hand.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Jacob cried out — <em>"You have brought me to shame —
+The people of Canaan will rise to our name.
+We are few — they will gather and strike us all down —"</em>
+But the brothers replied — <em>"Was our sister a gown
+
+To be treated like nothing? Should he treat her so?"</em>
+No answer was given where honour wouldn't go.
+A dark chapter written in blood and in grief —
+Where justice and vengeance gave neither relief.</div>`
+  },
+  {
+    num: 35, title: "Return to Bethel",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+God said, <em>"Go up, Jacob — arise and go on —
+To Bethel and dwell there and build Me a stone."</em>
+Jacob told all his household, <em>"Put away
+Your foreign gods and your earrings today."</em>
+
+They gave him the idols and under the oak
+He buried them deep where the old terebinth spoke.
+They journeyed to Bethel and God spread His fear
+On all of the cities — no enemy near.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+God appeared once more at the old altar place —
+And blessed him again and confirmed his new name.
+<em>"No longer be Jacob — but Israel stand —
+Be fruitful and multiply — here is your land."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Deborah the nurse of Rebekah had died —
+She's buried below the oak at Bethel's hillside.
+They journeyed from Bethel — toward Ephrathah's road —
+And Rachel gave birth with a very hard load.
+
+She named the son Ben-Oni — son of my sorrow —
+But Jacob called him Benjamin — son of tomorrow.
+And Rachel lay there and she breathed her last breath —
+And Jacob set up a great stone at her death.</div>`
+  },
+  {
+    num: 36, title: "Descendants of Esau",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Esau took his wives from the daughters of Canaan,
+And moved to the hill country — Edom, his domain.
+For the land couldn't hold them — both Jacob and Esau —
+The cattle too many, the range couldn't draw.
+
+So Esau settled in Seir as his inheritance wide —
+The father of Edom — the mountain-born pride.
+The sons and the chiefs of the Edomite land —
+All listed by name in the Master's own hand.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+From Eliphaz born to Adah, the chiefs rose tall —
+From Reuel and Basemath, from one came them all.
+The kings of Edom before Israel's crown —
+A parallel record of God's ancient town.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The dukes and the chieftains — a long litany —
+A brother-line running beside the great sea.
+For even the elder, the wild hunter's son,
+Had nations and blessings that God had begun.
+
+The Lord watches over the line of the lost —
+No name is forgotten, no story is tossed.
+Both lines of the brothers grow wide in the earth —
+And God keeps the ledger of lineage and worth.</div>`
+  },
+  {
+    num: 37, title: "Joseph Sold",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Jacob loved Joseph above all his sons —
+And made him a coat of the many-hued ones.
+His brothers all saw it and hatred crept in —
+They couldn't speak kindly — they burned with the sin.
+
+Then Joseph dreamed dreams and he told them aloud —
+The sheaves in the field bowed to his — and the crowd
+Of stars and the moon and the sun bowed as well —
+And his brothers grew jealous with fury to tell.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+They saw him afar in the field coming near —
+<em>"The dreamer is coming — let's end his career."</em>
+They stripped off his coat and they threw him down deep —
+Into the dry cistern — the pit and the sleep.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Judah said, <em>"What do we profit in blood —
+Let's sell him to traders who pass through the mud."</em>
+Ishmaelite merchants came by from the east —
+And they sold their own brother for twenty — the least.
+
+They slaughtered a goat and they dipped in the coat —
+And sent it to Jacob with a sorrowful note.
+He tore his own robes and he wept without end —
+And in Egypt, young Joseph went into the pen.</div>`
+  },
+  {
+    num: 38, title: "Judah & Tamar",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Judah turned from his brothers and settled the land —
+He married a Canaanite, took her by hand.
+She bore Er and Onan and Shelah in kind —
+But Er was wicked — the Lord took his mind.
+
+Then Onan was given to raise up his brother's heir —
+But he spilled on the ground — so God took him from there.
+Judah told Tamar, <em>"Remain as a widow and wait —
+Till Shelah grows up,"</em> but he sealed up her fate.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+She covered her face with a veil at the road —
+And Judah mistook her for one not his own.
+When she showed him the seal and the cord and the staff —
+He said, <em>"She is righteous — and I am the chaff."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+She bore him twin boys — Perez and Zerah by name —
+And the scarlet thread marked who had first made his claim.
+But Perez broke through first though Zerah's hand showed —
+And the line of the Messiah through Perez was sowed.
+
+A strange and a shadowed and tangled affair —
+Yet God kept the promise through scandal and snare.
+For the Savior would come from this very same line —
+Through Judah and Tamar — the flawed and divine.</div>`
+  },
+  {
+    num: 39, title: "Joseph in Egypt",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The Lord was with Joseph in Potiphar's house —
+He prospered in everything — quiet as a mouse
+Of favour and fortune — his master could see
+That God blessed the household through Joseph's decree.
+
+Potiphar trusted him — everything given —
+He ran the whole household — ambitious and driven.
+But Potiphar's wife cast her eye on the slave —
+And day after day she pursued what she craved.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Come, lie with me"</em> — and he fled from the door,
+She grabbed at his garment and he left it on the floor.
+She cried to the household, <em>"He came after me—"</em>
+And Joseph was thrown into prison — not free.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+But the Lord was with Joseph inside the stone wall —
+And the keeper of prisoners made Joseph stand tall.
+He gave him the charge over every prisoner there —
+For whatever he did — God was blessing with care.
+
+A coat in his youth, then another on the floor —
+The garment of Joseph stripped twice and once more.
+Yet every low valley that God led him through
+Was the road toward the throne that God's plan always knew.</div>`
+  },
+  {
+    num: 40, title: "The Cupbearer & Baker",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Two servants of Pharaoh fell under his wrath —
+The chief of the cupbearers walked a dark path.
+And the chief of the bakers was caged with him too —
+And Joseph was set to attend to the two.
+
+One morning he came to them both looking sad —
+<em>"Why are your faces so troubled and bad?"</em>
+<em>"We've dreamed and there's no one to tell us their meaning—"</em>
+<em>"Does not God interpret?"</em> said Joseph while leaning.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The cupbearer's vine grew three branches that day —
+In three days you'll be restored to your place, Joseph'd say.
+The baker heard good news — but Joseph told true:
+<em>"In three days, Pharaoh will hang you."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+The third day came round with Pharaoh's own feast —
+And the cupbearer's head was lifted the least —
+To his position, his cup — as the dream had foretold.
+But the baker was hanged — as the dark dream had told.
+
+Yet the cupbearer forgot in his glad restoration —
+He did not remember Joseph's situation.
+Two more years went by in the pit and the stone —
+Till a Pharaoh had dreams and could not dream alone.</div>`
+  },
+  {
+    num: 41, title: "Pharaoh's Dreams",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Two years passed before the Nile spoke in the night —
+Fat cows from the river, then lean cows in flight.
+Seven fat ears of grain on a single green stalk —
+Then seven thin ears blew them down in the dark.
+
+Pharaoh called every magician and wise man around —
+But not one of them gave any meaning they found.
+Then the cupbearer said, <em>"I remember my sin —
+There was a young Hebrew in prison within."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Joseph was rushed from the pit, shaved and dressed —
+And stood before Pharaoh — <em>"I hear you're the best."</em>
+<em>"Not in me — but God will give Pharaoh his peace —"</em>
+And the answer came clear as the seven years' feast.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"Seven years of abundance will fill up the land —
+Then seven years' famine — it's God's own right hand.
+The dream is repeated — it's certain and sealed —
+God speeds its fulfillment — the plan is revealed."</em>
+
+Pharaoh said, <em>"Who is like this man, filled with God's spirit?"</em>
+And he set Joseph over all Egypt to hear it.
+He gave him a ring and fine linen and gold —
+And at thirty years Joseph had full power to hold.</div>`
+  },
+  {
+    num: 42, title: "Brothers in Egypt",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The famine was biting in Canaan's dry land —
+And Jacob sent ten of his sons with demand
+To go down to Egypt and buy up the grain —
+But Benjamin stayed, lest he come to his pain.
+
+Joseph saw his brothers bow down to the floor —
+He recognized them but they knew him no more.
+He spoke to them harshly and called them all spies —
+And they argued their innocence under his eyes.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+The brothers said among themselves on the floor:
+<em>"We're guilty concerning our brother of yore —
+He begged and we didn't hear — now comes our grief—"</em>
+They didn't know Joseph was hearing each leaf.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+He took Simeon bound as a hostage to keep —
+And sent them with grain and their money tucked deep
+In the mouths of their sacks — so they'd tremble with fright
+When they found it and wonder at God's winding night.
+
+They told Jacob everything — and his heart fell low:
+<em>"Joseph is gone and Simeon's held — must Benjamin go?"</em>
+Reuben offered his sons as a pledge for the way —
+But Jacob refused and wept for the day.</div>`
+  },
+  {
+    num: 43, title: "Benjamin in Egypt",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The famine grew heavy — the grain ate away —
+And Jacob said, <em>"Go back and buy us more day."</em>
+Judah said, <em>"We cannot go without Benjamin there —
+The man told us plainly — he has to be there."</em>
+
+Jacob relented — sent gifts and double the gold —
+And Benjamin went with the brothers of old.
+When Joseph saw Benjamin, his heart nearly broke —
+He called for a feast and commanded his folk.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+They sat in their birth order — how could he know? —
+And the portions he gave to his Benjamin, though,
+Were five times the others — they drank and were glad —
+And Joseph slipped out to a room where he had
+
+To weep — for the sight of his brother so dear —
+He washed up his face and came back to appear.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+They marvelled at how the Egyptian could tell
+Which order was theirs — they looked at each spell
+Of seating and saw the same birth-order line —
+They looked at each other like some magic sign.
+
+He took them and fed them and gave them his best —
+The long-weeping heart was a prisoner's chest.
+The brother he'd longed for sat right in his sight —
+And Joseph held back the full flood of the night.</div>`
+  },
+  {
+    num: 44, title: "Judah's Plea",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Joseph commanded his steward at dawn:
+<em>"Fill all of their sacks and when they have gone
+Put my silver cup in the youngest one's sack —"</em>
+And they rode out at dawn not expecting to come back.
+
+They hadn't gone far when the steward gave chase —
+<em>"Why evil for good? Why dishonour this place?"</em>
+They said, <em>"We returned even the money we found —
+Would we steal silver cups from your master's own ground?"</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He searched from the eldest right down to the last —
+And the cup tumbled out of the youngest held fast.
+They tore their own robes and returned to the gate —
+And fell down before Joseph in grief and in weight.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Then Judah drew near — the same Judah who sold —
+And poured out his soul in a speech long and bold.
+He told the whole story from father to son —
+How Israel's life depended on this youngest one.
+
+<em>"My father will die if the boy doesn't come back —
+His soul is so bound to the boy — please don't attack.
+Let me stay as a slave in the place of my kin —
+For how could I go to my father with sin?"</em></div>`
+  },
+  {
+    num: 45, title: "Joseph Revealed",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Joseph could hold it no longer — he cried out to all:
+<em>"Send everyone out"</em> — and he let himself fall
+Into weeping so loud that the Egyptians heard —
+And he said to his brothers without one more word:
+
+<em>"I am Joseph — is my father still alive?"</em>
+The brothers stood speechless — too stunned to survive.
+<em>"Come closer to me"</em> — and they trembled with dread —
+<em>"I am Joseph your brother who you sold for bread."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>"Don't grieve and don't be angry at what you have done —
+God sent me ahead of you — I was the one
+He sent to preserve life — to be here before —
+A father to Pharaoh — a keeper in store."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"Go quickly to father and bring him to me —
+Five years of famine remain — come and be free.
+Here in the land of Goshen you'll dwell and you'll stay —
+You and your children and flocks every day."</em>
+
+He fell on his brothers and wept on them all —
+He kissed Benjamin — wept — and then kissed them in hall.
+And Pharaoh said, <em>"Go — bring your father and kin —
+The best of the land of Egypt begins."</em></div>`
+  },
+  {
+    num: 46, title: "Jacob Goes to Egypt",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Israel set out with all that he had —
+And came to Beersheba with offerings glad.
+He offered to the God of his father Isaac's name —
+And God spoke to him in the night-vision's flame.
+
+<em>"Jacob, Jacob"</em> — <em>"Here am I, Lord"</em> — he replied —
+<em>"I am God — do not fear — I'll be right at your side.
+I will go with you down into Egypt with grace —
+And I will also bring you back up to your place."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Seventy souls of the house of Israel went down —
+Sons and grandsons and daughters and wives to the town.
+And Joseph rode out to meet his father on the road —
+He fell on his neck in the long-carried load.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"I can die now,"</em> said Israel weeping with joy,
+<em>"Since I've seen your face — and you're alive, my boy."</em>
+He brought all his family to Pharaoh to stand —
+And Pharaoh said, <em>"Settle — Goshen is your land."</em>
+
+And old Jacob blessed Pharaoh who stood there as king —
+The patriarch's blessing — a remarkable thing.
+For he who was greatest receives blessing from those
+Whose God is the highest — the one no one knows.</div>`
+  },
+  {
+    num: 47, title: "Israel in Goshen",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+The family settled in Goshen's green land —
+And Joseph provided with generous hand.
+But the famine still ravaged the whole of the earth —
+And Egypt gave everything silver was worth.
+
+When the silver was spent, the people cried out —
+<em>"Give us bread — we will die without doubt."</em>
+Then Joseph took livestock — their horses and herds —
+And gave them the bread for another year's words.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+Then the land and the people became Pharaoh's slave —
+All except the priests whose portion God gave.
+A fifth of the harvest — the tax of the throne —
+And the people were grateful for the seed they were shown.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Israel lived in Goshen and multiplied fast —
+Seventeen years in the land — holding fast.
+When Jacob's death drew near he called Joseph close:
+<em>"Don't bury me here in this Egypt I host —"</em>
+
+<em>"Carry me back to the cave of my kin —
+Where Abraham, Isaac, and Leah sleep in."</em>
+Joseph swore with his hand on his father's own thigh —
+And Jacob bowed low at the head of the high.</div>`
+  },
+  {
+    num: 48, title: "Jacob Blesses Ephraim",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Word came to Joseph — his father was ill —
+And he took his two sons up the long road until
+He stood by the bedside of Israel grey —
+Who rallied in strength for one last, blessed day.
+
+<em>"God Almighty appeared to me long ago —
+At Luz in the land of Canaan to show
+He'd bless me and multiply children like sand —
+And give this whole country as a permanent land."</em></div>
+
+<div class="chorus"><span class="label">Chorus</span>
+He reached out his right hand — but set it on the head
+Of Ephraim the younger — not Manasseh instead.
+Joseph tried to correct the old patriarch's hand —
+But Israel said, <em>"I know, son — I understand."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"His younger brother shall be greater than he —
+And his seed shall be a fullness of nations to see."</em>
+He blessed them that day and he said with a smile —
+<em>"By your names shall Israel bless for a while:
+
+'May God make you like Ephraim and Manasseh, son.'"</em>
+He put Ephraim first — the last shall be first, it's begun.
+Then he said to young Joseph, <em>"I'm about to die —
+But God will bring you back — back to the land by and by."</em></div>`
+  },
+  {
+    num: 49, title: "Jacob's Blessings",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Gather around me, my sons — gather and hear —
+What shall befall you in the latter years here.
+Reuben — my firstborn — unstable as water —
+You went to my bed and you brought me to slaughter.
+
+Simeon and Levi — brothers of fury —
+Their swords instruments of violence and jury.
+Judah — your brothers will praise you, my son —
+The sceptre will not depart till the ruler has come.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+<em>The lion's whelp, Judah — who shall rouse him up?</em>
+<em>The sceptre won't leave till Shiloh fills the cup.</em>
+Twelve sons and twelve blessings — some dark and some bright —
+The destiny spoken by a father at night.</div>
+
+<div class="verse"><span class="label">Verse 2</span>
+Zebulun — toward the haven, the ships and the shore.
+Issachar — the strong donkey bearing the chore.
+Dan — a serpent beside the road's edge.
+Gad — troops shall overcome him — he'll turn that pledge.
+
+Asher — his bread shall be rich with the fat.
+Naphtali — a swift deer, his words beautiful-flat.
+Joseph — a fruitful vine by the spring and the wall —
+Benjamin — a wolf — devouring all.
+
+He gathered his feet and breathed out his last word —
+He was gathered to his people — the patriarchs heard.</div>`
+  },
+  {
+    num: 50, title: "Death & Promise",
+    lyrics: `<div class="verse"><span class="label">Verse 1</span>
+Joseph fell on his father's old face and he wept —
+He commanded the physicians and Egypt was swept
+In seventy days of mourning for Israel's own —
+And Pharaoh gave leave to go bury his bone.
+
+A great and grievous procession moved out of the gate —
+All Egypt and Canaan — the small and the great.
+They buried old Jacob in Machpelah's cave —
+Where Abraham, Sarah, and Isaac were laid.</div>
+
+<div class="chorus"><span class="label">Chorus</span>
+When the brothers saw Jacob was dead and was gone,
+They feared that Joseph would pay them for what they had done.
+They sent him a message — <em>"Your father said, forgive—"</em>
+And Joseph wept hearing and said, <em>"You will live."</em></div>
+
+<div class="verse"><span class="label">Verse 2</span>
+<em>"Am I in the place of God?"</em> Joseph replied —
+<em>"You meant it for evil but God's purpose abide.
+He sent me before you to save many lives —
+So fear not — I'll care for your children and wives."</em>
+
+He lived to a hundred and ten years and more —
+He saw Ephraim's children to the third and fourth shore.
+And before he died, Joseph made them all swear —
+<em>"God will surely visit you — carry my bones there."</em>
+
+So he died in Egypt and they laid him to rest —
+In a coffin of faith — pointing westward and blessed.
+The book of beginnings — from darkness to light —
+From <em>nothing</em> to Joseph — from first day to night.</div>`
+  },
+];
+
+// ── Render nav
+const nav = document.getElementById('chapNav');
+chapters.forEach(ch => {
+  const a = document.createElement('a');
+  a.href = `#ch${ch.num}`;
+  a.textContent = ch.num;
+  a.title = ch.title;
+  nav.appendChild(a);
+});
+
+// ── Render chapters
+const main = document.getElementById('main');
+chapters.forEach(ch => {
+  const section = document.createElement('section');
+  section.className = 'chapter';
+  section.id = `ch${ch.num}`;
+  section.innerHTML = `
+    <div class="chapter-heading">
+      <div class="ch-num">${String(ch.num).padStart(2,'0')}</div>
+      <div class="ch-title">${ch.title}</div>
+    </div>
+    <div class="ch-divider"></div>
+    <div class="lyrics">${ch.lyrics}</div>
+  `;
+  main.appendChild(section);
+});
+
+// ── Active nav highlight
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.chapter-nav a').forEach(a => a.style.color = '');
+      const active = document.querySelector(`.chapter-nav a[href="#${e.target.id}"]`);
+      if (active) active.style.color = 'var(--gold)';
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
